@@ -10,7 +10,7 @@ import { CertificateStudio } from './components/CertificateStudio';
 import { ClubTools } from './components/ClubTools';
 import { Games } from './components/Games';
 import { generateAgentContent, AGENTS } from './services/gemini';
-import { trackGeneration, trackTabChange } from './services/firebase';
+import { trackTabChange } from './services/firebase';
 import { Mail, Lightbulb, ListChecks, Image as ImageIcon } from 'lucide-react';
 
 /**

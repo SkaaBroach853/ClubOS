@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Download, RefreshCw, Image as ImageIcon, Zap } from 'lucide-react';
 import { generateMemeCaptions } from '../../services/gemini';
-import { cn } from '../../lib/utils';
+
 
 export const MemeGenerator = ({ userKey, onShowToast }) => {
   const [brief, setBrief] = useState('');

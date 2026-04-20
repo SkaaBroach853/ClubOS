@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import QRCode from 'qrcode';
 import JSZip from 'jszip';
 import { UploadCloud, Download, CheckCircle, Zap, ShieldCheck } from 'lucide-react';
-import { cn } from '../../lib/utils';
+
 
 export const QRCheckIn = ({ onShowToast }) => {
   const [eventName, setEventName] = useState('');

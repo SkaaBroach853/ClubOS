@@ -4,7 +4,7 @@ import { jsPDF } from 'jspdf';
 // removed autotable since it's not installed
 import { Zap, Download, RefreshCw, BarChart2 } from 'lucide-react';
 import { generateBudgetAI } from '../../services/gemini';
-import { cn } from '../../lib/utils';
+
 
 Chart.register(...registerables);
 

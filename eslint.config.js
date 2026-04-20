@@ -28,11 +28,16 @@ export default defineConfig([
         varsIgnorePattern: '^[A-Z_]',
         argsIgnorePattern: '^_',
         caughtErrorsIgnorePattern: '^_',
+        caughtErrors: 'none', // Never report unused catch error variables
       }],
-      // Downgrade setState-in-effect to warn — valid for initialization patterns
+      // Empty catch blocks are valid in React for intentional error swallowing
+      'no-empty': ['warn', { allowEmptyCatch: true }],
+      // Downgrade setState-in-effect to off — valid for initialization patterns
       'react-hooks/set-state-in-effect': 'off',
       // Keep exhaustive deps as warn not error
       'react-hooks/exhaustive-deps': 'warn',
+      // Allow function hoisting (functions used before declaration in useEffect)
+      'no-use-before-define': 'off',
     },
   },
 ])

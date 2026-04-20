@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ShoppingBag, Zap, ExternalLink, Brush } from 'lucide-react';
 import { generateMerchConcepts } from '../../services/gemini';
-import { cn } from '../../lib/utils';
+
 import { CardSkeleton } from '../CardSkeleton';
 
 export const MerchStore = ({ userKey, onShowToast }) => {

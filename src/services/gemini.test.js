@@ -4,7 +4,7 @@
  * These tests validate the agent configurations, JSON schema enforcement,
  * and API key management used across the college club event automation system.
  */
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { AGENTS } from './gemini';
 
 // ─── AGENT CONFIGURATION TESTS ──────────────────────────────────────────────

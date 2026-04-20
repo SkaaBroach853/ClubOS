@@ -96,16 +96,18 @@ const ActiveTimerDisplay = ({ stages, onClose }) => {
     if(stages[currentIdx]) setTimeLeft(getStageSeconds(stages[currentIdx]));
   }, [currentIdx, stages]);
 
-  useEffect(() => {
-    let intv;
-    if(isActive && timeLeft > 0) {
-      intv = setInterval(() => setTimeLeft(t => t - 1), 1000);
-    } else if (isActive && timeLeft === 0) {
-      handleTimeUp();
-    }
-    return () => clearInterval(intv);
-  }, [isActive, timeLeft]);
+  // playBeep must be declared before handleTimeUp since handleTimeUp calls it
+  const playBeep = () => {
+    try {
+      const actx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = actx.createOscillator();
+      osc.type = 'sine'; osc.frequency.setValueAtTime(880, actx.currentTime);
+      osc.connect(actx.destination);
+      osc.start(); osc.stop(actx.currentTime + 0.3);
+    } catch(_e){}
+  };
 
+  // handleTimeUp calls playBeep, so declared second
   const handleTimeUp = () => {
     setIsActive(false);
     playBeep();
@@ -123,15 +125,17 @@ const ActiveTimerDisplay = ({ stages, onClose }) => {
     }, 3000);
   };
 
-  const playBeep = () => {
-    try {
-      const actx = new (window.AudioContext || window.webkitAudioContext)();
-      const osc = actx.createOscillator();
-      osc.type = 'sine'; osc.frequency.setValueAtTime(880, actx.currentTime);
-      osc.connect(actx.destination);
-      osc.start(); osc.stop(actx.currentTime + 0.3);
-    } catch(e){}
-  };
+  useEffect(() => {
+    let intv;
+    if(isActive && timeLeft > 0) {
+      intv = setInterval(() => setTimeLeft(t => t - 1), 1000);
+    } else if (isActive && timeLeft === 0) {
+      handleTimeUp();
+    }
+    return () => clearInterval(intv);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isActive, timeLeft]);
+
 
   const formatT = (t) => {
     const m = Math.floor(t / 60).toString().padStart(2, '0');
