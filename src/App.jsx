@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, CheckCircle2, Terminal, Zap, Sparkles, Settings as SettingsIcon, Trash2, Hexagon, Wand2, GraduationCap, Copy, Hammer, Gamepad2 } from 'lucide-react';
+import { Clock, CheckCircle2, Terminal, Zap, Settings as SettingsIcon, Trash2, Hexagon, Wand2, GraduationCap, Copy, Hammer, Gamepad2 } from 'lucide-react';
 import { SettingsPanel } from './components/SettingsPanel';
 import { SocialMediaCard } from './components/SocialMediaCard';
 import { PresentationCard } from './components/PresentationCard';
@@ -10,7 +10,21 @@ import { CertificateStudio } from './components/CertificateStudio';
 import { ClubTools } from './components/ClubTools';
 import { Games } from './components/Games';
 import { generateAgentContent, AGENTS } from './services/gemini';
+import { trackGeneration, trackTabChange } from './services/firebase';
 import { Mail, Lightbulb, ListChecks, Image as ImageIcon } from 'lucide-react';
+
+/**
+ * Sanitizes user input to prevent XSS and injection attacks.
+ * @param {string} input - Raw user input from the event brief textarea
+ * @returns {string} Sanitized input safe for processing
+ */
+const sanitizeInput = (input) => {
+  if (typeof input !== 'string') return '';
+  return input.replace(/[<>"'`]/g, (char) => {
+    const map = { '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#x27;', '`': '&#x60;' };
+    return map[char];
+  }).trim();
+};
 
 const Toast = ({ message, type = 'success', isVisible }) => (
   <div className={`fixed bottom-16 right-8 z-50 transform transition-all duration-300 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0 pointer-events-none'}`}> 
@@ -123,6 +137,13 @@ export default function App() {
 
   const handleGenerate = async () => {
     if (!brief.trim()) return;
+    
+    // Sanitize input before sending to AI to prevent injection
+    const sanitizedBrief = sanitizeInput(brief);
+    if (sanitizedBrief.length < 5) {
+      showToast("Brief is too short. Please describe your event in more detail.", 'error');
+      return;
+    }
     
     const keyToUse = settings.apiKey || import.meta.env.VITE_GEMINI_API_KEY;
     if (!keyToUse) {
@@ -269,20 +290,20 @@ export default function App() {
               <h1 className="text-2xl font-black tracking-tight text-white hidden md:block">ClubOS</h1>
             </div>
 
-            <div className="flex bg-[#121215] border border-[#2a2a33] p-1 rounded-lg">
-               <button onClick={() => setActiveTab('generator')} className={`px-4 py-2 text-sm font-bold flex items-center gap-2 rounded-md transition whitespace-nowrap ${activeTab === 'generator' ? 'bg-[#2a2a33] text-white shadow-sm' : 'text-gray-400 hover:text-gray-200'}`}>
-                  <Wand2 size={16} /> Event Generator
+            <nav aria-label="Main navigation" className="flex bg-[#121215] border border-[#2a2a33] p-1 rounded-lg">
+               <button aria-label="Event Generator" aria-current={activeTab === 'generator' ? 'page' : undefined} onClick={() => { setActiveTab('generator'); trackTabChange('generator'); }} className={`px-4 py-2 text-sm font-bold flex items-center gap-2 rounded-md transition whitespace-nowrap ${activeTab === 'generator' ? 'bg-[#2a2a33] text-white shadow-sm' : 'text-gray-400 hover:text-gray-200'}`}>
+                  <Wand2 size={16} aria-hidden="true" /> Event Generator
                </button>
-               <button onClick={() => setActiveTab('tools')} className={`px-4 py-2 text-sm font-bold flex items-center gap-2 rounded-md transition whitespace-nowrap ${activeTab === 'tools' ? 'bg-[#2a2a33] text-white shadow-sm' : 'text-gray-400 hover:text-gray-200'}`}>
-                  <Hammer size={16} /> Club Tools
+               <button aria-label="Club Tools" aria-current={activeTab === 'tools' ? 'page' : undefined} onClick={() => { setActiveTab('tools'); trackTabChange('tools'); }} className={`px-4 py-2 text-sm font-bold flex items-center gap-2 rounded-md transition whitespace-nowrap ${activeTab === 'tools' ? 'bg-[#2a2a33] text-white shadow-sm' : 'text-gray-400 hover:text-gray-200'}`}>
+                  <Hammer size={16} aria-hidden="true" /> Club Tools
                </button>
-               <button onClick={() => setActiveTab('certstudio')} className={`px-4 py-2 text-sm font-bold flex items-center gap-2 rounded-md transition whitespace-nowrap ${activeTab === 'certstudio' ? 'bg-[#2a2a33] text-white shadow-sm' : 'text-gray-400 hover:text-gray-200'}`}>
-                  <GraduationCap size={16} /> Certificate Studio
+               <button aria-label="Certificate Studio" aria-current={activeTab === 'certstudio' ? 'page' : undefined} onClick={() => { setActiveTab('certstudio'); trackTabChange('certstudio'); }} className={`px-4 py-2 text-sm font-bold flex items-center gap-2 rounded-md transition whitespace-nowrap ${activeTab === 'certstudio' ? 'bg-[#2a2a33] text-white shadow-sm' : 'text-gray-400 hover:text-gray-200'}`}>
+                  <GraduationCap size={16} aria-hidden="true" /> Certificate Studio
                </button>
-               <button onClick={() => setActiveTab('games')} className={`px-4 py-2 text-sm font-bold flex items-center gap-2 rounded-md transition whitespace-nowrap ${activeTab === 'games' ? 'bg-[#2a2a33] text-white shadow-sm' : 'text-gray-400 hover:text-gray-200'}`}>
-                  <Gamepad2 size={16} /> Games
+               <button aria-label="Games" aria-current={activeTab === 'games' ? 'page' : undefined} onClick={() => { setActiveTab('games'); trackTabChange('games'); }} className={`px-4 py-2 text-sm font-bold flex items-center gap-2 rounded-md transition whitespace-nowrap ${activeTab === 'games' ? 'bg-[#2a2a33] text-white shadow-sm' : 'text-gray-400 hover:text-gray-200'}`}>
+                  <Gamepad2 size={16} aria-hidden="true" /> Games
                </button>
-            </div>
+            </nav>
           </div>
           
           <div className="flex items-center gap-4 shrink-0">
@@ -308,11 +329,16 @@ export default function App() {
                  
                  <div className="relative bg-[#16161a] rounded-3xl overflow-hidden shadow-2xl border border-[#2a2a33]/80 group-focus-within:border-accent/50 transition-colors">
                    <textarea
+                     id="event-brief"
                      value={brief}
                      onChange={(e) => setBrief(e.target.value)}
+                     aria-label="Event brief input"
+                     aria-describedby="brief-hint"
                      placeholder="Describe your event... e.g. Tech hackathon on May 10th, 80 students, prizes worth ₹50,000, sponsors needed"
                      className="w-full h-40 bg-transparent text-white placeholder-gray-500 p-6 sm:p-8 resize-none focus:outline-none text-lg lg:text-xl leading-relaxed custom-scrollbar font-medium"
+                     maxLength={2000}
                    />
+                   <span id="brief-hint" className="sr-only">Describe your college event or hackathon in detail. AI agents will generate social media, presentations, and more.</span>
                    
                    <div className="flex flex-col sm:flex-row items-center justify-between p-4 sm:p-6 bg-[#16161a]/95 border-t border-[#2a2a33]/50 gap-4">
                      <div className="flex items-center gap-4 w-full sm:w-auto overflow-x-auto custom-scrollbar pb-2 sm:pb-0">
