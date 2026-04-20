@@ -14,12 +14,22 @@ export const AGENTS = {
   flyer: { id: "flyer", title: "Flyer Generator", system: "You are a graphic designer. Given an event brief, return EXACTLY this JSON: { \"headline\": \"...\", \"subheadline\": \"...\", \"date\": \"...\", \"venue\": \"...\", \"highlights\": [\"...\",\"...\",\"...\"], \"cta\": \"...\", \"colorTheme\": \"dark|vibrant|minimal\", \"emojiAccent\": \"🚀\" }. Return ONLY valid JSON." }
 };
 
+/**
+ * Core utility to invoke the Google Gemini AI Model.
+ * This is the central engine for ClubOS, automating tasks for college hackathons, fests, and clubs.
+ * 
+ * @param {string} systemInstruction - The strict prompt template enforcing JSON schema.
+ * @param {string} userPrompt - The event brief provided by the college club organizer.
+ * @param {string} [userKey] - Optional override for the Gemini API Key (defaults to process env).
+ * @returns {Promise<Object>} The parsed JSON output from the AI.
+ * @throws {Error} Throws "NO_KEY" if no API key is found.
+ */
 const invokeGemini = async (systemInstruction, userPrompt, userKey) => {
   const apiKey = getGeminiKey(userKey);
   if (!apiKey) throw new Error("NO_KEY");
   
   const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash", systemInstruction });
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash", systemInstruction });
   const generationConfig = { responseMimeType: "application/json" };
   const result = await model.generateContent({ contents: [{ role: 'user', parts: [{ text: userPrompt }] }], generationConfig });
   return JSON.parse(result.response.text());

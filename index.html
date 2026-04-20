@@ -4,10 +4,47 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>prompt-war</title>
+
+    <!-- SEO & Problem Statement -->
+    <title>ClubOS — AI-Powered College Club Management Platform</title>
+    <meta name="description" content="ClubOS is an all-in-one AI ecosystem for college clubs and event organizers. Powered by Google Gemini 2.0, it automates social media, presentations, certificates, budgets, QR check-ins and more." />
+    <meta name="keywords" content="college club management, AI event planner, Google Gemini, hackathon tool, event automation, club OS" />
+    <meta name="author" content="AD Studio" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="ClubOS — AI-Powered College Club Management" />
+    <meta property="og:description" content="Automate everything: social media, presentations, certificates, budgets, QR check-ins using Google Gemini AI." />
+    <meta property="og:type" content="website" />
+
+    <!-- Security -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+    <!-- Google Analytics (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CLUBOS2026"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-CLUBOS2026', {
+        page_title: 'ClubOS',
+        page_location: window.location.href
+      });
+    </script>
   </head>
   <body>
-    <div id="root"></div>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:rounded-lg">
+      Skip to main content
+    </a>
+    <div id="root" role="application" aria-label="ClubOS Application"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
