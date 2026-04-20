@@ -120,5 +120,5 @@ ClubOS dynamically routes explicit `/cert-api` backend fetches directly to `http
 
 
 <div align="center"\>
-<b\>Built by AD Studio · PromptWars 2025\</b\>
+<b\>Built by AD Studio · PromptWars 2026</b\>
 </div\>
