@@ -91,7 +91,7 @@ You will absolutely require a Google Gemini API Key. Get one from [Google AI Stu
    ```bash
    git clone [https://github.com/SkaaBroach853/ClubOS.git](https://github.com/SkaaBroach853/ClubOS.git)
    cd ClubOS
-````
+'''
 
 2.  Install standard frontend dependencies:
 
