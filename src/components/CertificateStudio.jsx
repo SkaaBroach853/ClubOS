@@ -1,7 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { CheckCircle2, XCircle, UploadCloud, Download, Image as ImageIcon, Settings2, Mail, Loader2, Zap, FileText } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { CheckCircle2, XCircle, UploadCloud, Download, Image as ImageIcon, Settings2, Mail, Loader2, Send, FileText } from 'lucide-react';
 import { cn } from '../lib/utils';
 
+/**
+ * CertificateStudio Component
+ * Handles certificate generation, preview, and email automation for college events.
+ * Integrates with the CertFlow Flask backend for bulk certificate generation.
+ * 
+ * @param {Object} settings - App settings including certFlowUrl
+ * @param {Function} onShowToast - Toast notification callback
+ * @param {string} eventNameBrief - Event name pre-filled from generator
+ */
 export const CertificateStudio = ({ settings, onShowToast, eventNameBrief }) => {
   const [isConnected, setIsConnected] = useState(false);
   const [isCheckingInfo, setIsCheckingInfo] = useState(true);
@@ -36,6 +45,19 @@ export const CertificateStudio = ({ settings, onShowToast, eventNameBrief }) => 
     return `${base}${endpoint}`;
   };
 
+  // Defined BEFORE useEffect to avoid accessing before declaration
+  const checkConnection = async () => {
+    setIsCheckingInfo(true);
+    try {
+      await fetch(getApiUrl('/'));
+      setIsConnected(true);
+    } catch {
+      setIsConnected(false);
+    } finally {
+      setIsCheckingInfo(false);
+    }
+  };
+
   useEffect(() => {
     if (eventNameBrief) {
        setTextBoxes(prev => ({ ...prev, course: { ...prev.course, placeholder: eventNameBrief } }));
@@ -45,22 +67,15 @@ export const CertificateStudio = ({ settings, onShowToast, eventNameBrief }) => 
   useEffect(() => {
     const creds = localStorage.getItem('clubos_gmail');
     if (creds) {
-      setEmailCreds(JSON.parse(creds));
+      try {
+        setEmailCreds(JSON.parse(creds));
+      } catch {
+        // Invalid JSON, ignore
+      }
     }
     checkConnection();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [settings.certFlowUrl]);
-
-  const checkConnection = async () => {
-    setIsCheckingInfo(true);
-    try {
-      const res = await fetch(getApiUrl('/'));
-      setIsConnected(true);
-    } catch {
-      setIsConnected(false);
-    } finally {
-      setIsCheckingInfo(false);
-    }
-  };
 
   const handleTemplateUpload = async (e) => {
     const file = e.target.files?.[0];
