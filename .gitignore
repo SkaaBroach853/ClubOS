@@ -1,4 +1,6 @@
-# Logs
+# Google Cloud SDK — should never be committed
+google-cloud-sdk/
+
 logs
 *.log
 npm-debug.log*
