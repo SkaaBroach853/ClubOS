@@ -118,11 +118,7 @@ To use the **Certificate Studio**, you must have the **[Certificate\_AD Backend]
 
 ClubOS dynamically routes explicit `/cert-api` backend fetches directly to `http://127.0.0.1:5000`. Set up the Python server, run `python app.py`, and ClubOS will instantly establish connection handshakes.
 
------
 
-\<div align="center"\>
-\<b\>Built by AD Studio · PromptWars 2025\</b\>
-\</div\>
-
-```
-```
+<div align="center"\>
+<b\>Built by AD Studio · PromptWars 2025\</b\>
+</div\>
