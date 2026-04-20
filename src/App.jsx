@@ -148,13 +148,21 @@ export default function App() {
     const allActiveAgents = [...activeDefaultAgents, ...activeCustomAgents];
     
     try {
-      const promises = allActiveAgents.map(async (agentConfig) => {
+      const promises = allActiveAgents.map(async (agentConfig, index) => {
+        await new Promise(resolve => setTimeout(resolve, index * 700));
         try {
           const res = await generateAgentContent(agentConfig, brief, keyToUse);
           return { agentId: agentConfig.id, data: res };
         } catch (err) {
           console.error(`Failed to generate for ${agentConfig.id}`, err);
-          return { agentId: agentConfig.id, error: err.message || "Failed to generate" };
+          // Retry once after 2 seconds on failure
+          try {
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            const res = await generateAgentContent(agentConfig, brief, keyToUse);
+            return { agentId: agentConfig.id, data: res };
+          } catch (retryErr) {
+            return { agentId: agentConfig.id, error: retryErr.message || "Failed to generate" };
+          }
         }
       });
 
