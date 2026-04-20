@@ -6,7 +6,7 @@ import { Tetris } from './games/Tetris';
 import { BrickBreaker } from './games/BrickBreaker';
 import { MarioRun } from './games/MarioRun';
 
-export const Games = ({ onShowToast }) => {
+export const Games = ({ onShowToast: _onShowToast }) => {
   const [activeGame, setActiveGame] = useState(null);
 
   const gamesConfig = [

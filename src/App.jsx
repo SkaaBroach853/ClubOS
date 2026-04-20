@@ -44,6 +44,7 @@ export default function App() {
   const [history, setHistory] = useState([]);
   
   const [responses, setResponses] = useState({});
+  // eslint-disable-next-line no-unused-vars
   const [errors, setErrors] = useState({});
 
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);

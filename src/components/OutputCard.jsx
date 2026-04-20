@@ -3,7 +3,8 @@ import { Copy, CheckCircle2 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { CardSkeleton } from './CardSkeleton';
 
-export const OutputCard = ({ title, icon: Icon, data, isGenerating, staggerDelay, agentId }) => {
+// eslint-disable-next-line no-unused-vars
+export const OutputCard = ({ title, Icon, data, isGenerating, staggerDelay, agentId }) => {
   const [copied, setCopied] = useState(false);
 
   const showSkeleton = isGenerating || !data;

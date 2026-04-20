@@ -3,7 +3,7 @@ import { X, Eye, EyeOff, Save, Trash2, CheckCircle2, Settings as SettingsIcon, P
 import { cn } from '../lib/utils';
 import { AGENTS } from '../services/gemini';
 
-export const SettingsPanel = ({ isOpen, onClose, settings, onSave, onClear, customAgents, setCustomAgents, onTestConnection, onShowToast }) => {
+export const SettingsPanel = ({ isOpen, onClose, settings, onSave, onClear, customAgents, setCustomAgents, onTestConnection: _onTestConnection, onShowToast }) => {
   const [apiKey, setApiKey] = useState('');
   const [showKey, setShowKey] = useState(false);
   const [agents, setAgents] = useState({});

@@ -4,7 +4,7 @@
  * Tests input sanitization, localStorage helpers, and string utilities
  * used throughout the college club event management platform.
  */
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 // ─── SANITIZATION UTILITIES ──────────────────────────────────────────────────
 

@@ -4,7 +4,7 @@
  * Tests the end-to-end behavior of multi-agent orchestration, settings
  * persistence, and real-world college event automation scenarios.
  */
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { AGENTS } from '../services/gemini';
 
 // ─── AGENT PIPELINE INTEGRATION TESTS ────────────────────────────────────────

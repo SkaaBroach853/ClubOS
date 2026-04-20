@@ -1,5 +1,12 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
+/**
+ * Retrieves the Gemini API key from user-provided key or environment variable.
+ * Keys are never stored in code — sourced from localStorage (user setting) or build env.
+ *
+ * @param {string} [userKey] - Optional key override from user settings (localStorage)
+ * @returns {string} The API key, or empty string if none configured
+ */
 const getGeminiKey = (userKey) => {
   if (userKey) return userKey;
   return import.meta.env.VITE_GEMINI_API_KEY || "";
@@ -35,6 +42,15 @@ const invokeGemini = async (systemInstruction, userPrompt, userKey) => {
   return JSON.parse(result.response.text());
 };
 
+/**
+ * Invokes a specific ClubOS AI agent with the user's event brief.
+ * Wrapper around invokeGemini for external use by components.
+ *
+ * @param {Object} agentConfig - One of the AGENTS definitions (id, title, system)
+ * @param {string} brief - The sanitized event brief from the user
+ * @param {string} [userKey] - Optional API key override
+ * @returns {Promise<Object>} Parsed JSON result from Gemini
+ */
 export const generateAgentContent = async (agentConfig, brief, userKey) => {
   return await invokeGemini(agentConfig.system, brief, userKey);
 };
