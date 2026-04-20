@@ -1,6 +1,3 @@
-Here is the cleaned-up, properly formatted version of your ClubOS README. I’ve stripped out those weird encoding characters at the bottom so it’s ready to drop straight into your GitHub repository\!
-
-````markdown
 <div align="center">
   <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite">
   <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React">
@@ -23,7 +20,7 @@ Here is the cleaned-up, properly formatted version of your ClubOS README. I’ve
 
 **ClubOS** is a massive, multi-agent AI ecosystem built entirely in React designed specifically to supercharge how college clubs and organizations operate. Instead of using 10 different fragmented tools, ClubOS consolidates all of the creative, administrative, and marketing processes into a single, highly performant dashboard. 
 
-You write one single "Event Brief" (e.g. *"We are hosting a 24-hour Web3 Hackathon for 500 students"*), and ClubOS simultaneously dispatches highly specialized AI Agents running **in parallel** to formulate social media posts, sponsorship emails, presentations, flyers, unhinged viral ideas, budgets, engaging quizzes, and much more.
+You write one single "Event Brief" (e.g., *"We are hosting a 24-hour Web3 Hackathon for 500 students"*), and ClubOS simultaneously dispatches highly specialized AI Agents running **in parallel** to formulate social media posts, sponsorship emails, presentations, flyers, unhinged viral ideas, budgets, engaging quizzes, and much more.
 
 ---
 
@@ -56,7 +53,7 @@ Eight fully functioning, distinct applications tailored to make campus organizin
 
 ### 4. 🧪 Standalone Custom Agent Configurator
 The **Settings ⚙️ Panel** isn't just for an API key. It contains a fully functional Custom Agent creator.
-You can create your own specialized assistants (e.g. a "Code-of-Conduct Enforcer"), assign them specific JSON outputs, colors, and system instructions, and they immediately weave into your batch-generation flows indefinitely stored on `localStorage`.
+You can create your own specialized assistants (e.g., a "Code-of-Conduct Enforcer"), assign them specific JSON outputs, colors, and system instructions, and they immediately weave into your batch-generation flows indefinitely stored on `localStorage`.
 
 ### 5. 🕹️ Arcade Break (Mini-Games)
 Since managing communities is stressful, ClubOS directly embeds flawlessly optimized **HTML5 Canvas Games**:
@@ -89,6 +86,7 @@ Ensure you have `Node.js` installed.
 You will absolutely require a Google Gemini API Key. Get one from [Google AI Studio](https://aistudio.google.com/).
 
 ### 2. Setup
+
 1. Clone the repository natively:
    ```bash
    git clone [https://github.com/SkaaBroach853/ClubOS.git](https://github.com/SkaaBroach853/ClubOS.git)
@@ -96,17 +94,20 @@ You will absolutely require a Google Gemini API Key. Get one from [Google AI Stu
 ````
 
 2.  Install standard frontend dependencies:
+
     ```bash
     npm install
     ```
+
 3.  Boot the Vite application:
+
     ```bash
     npm run dev
     ```
 
 ### 3\. Setting Your API Key
 
-1.  Upon loading `localhost:5173`, click the **Settings ⚙️** icon in the top right.
+1.  Upon loading `localhost:5173`, click the **Settings** ⚙️ icon in the top right.
 2.  Under **API Keys**, paste your Gemini API Key securely. It encrypts gracefully into your device's `localStorage` meaning it persists securely exclusively for you.
 
 -----
